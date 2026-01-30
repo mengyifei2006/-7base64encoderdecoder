@@ -3,64 +3,513 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base64 Encoder / Decoder - Free Online Tool</title>
-    <meta name="description" content="A free online Base64 encoder and decoder. Easily encode your text to Base64 or decode Base64 to text instantly in your browser. Secure and free.">
-        <link rel="stylesheet" href="style.css">
+    <title>Base64 Encoder / Decoder - Clean Converter for Text & Images</title>
+    <meta name="description" content="A clean, Apple-style Base64 encoder and decoder. Convert text and images to Base64 instantly. Secure, client-side, and SEO-optimized tool.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                        mono: ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+                    },
+                    colors: {
+                        apple: {
+                            blue: '#007AFF',
+                            gray: '#F5F5F7',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar for code blocks */
+        .code-scroll::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .code-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .code-scroll::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 4px;
+        }
+        .code-scroll::-webkit-scrollbar-thumb:hover {
+            background-color: #94a3b8;
+        }
+        
+        /* Smooth transitions */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Drag active state */
+        .drag-active {
+            border-color: #007AFF !important;
+            background-color: #EFF6FF !important;
+            transform: scale(1.01);
+        }
+    </style>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8C8J9TCKEQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-8C8J9TCKEQ');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8C8J9TCKEQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8C8J9TCKEQ');
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Base64 Encoder Decoder",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free online tool to encode and decode Base64 strings and convert images to Base64."
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1336697940295449"
+      crossorigin="anonymous"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>Online Base64 Encoder / Decoder</h1>
+<body class="bg-[#F5F5F7] text-slate-900 min-h-screen flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900">
 
-        <label for="text-input">Plain Text (UTF-8):</label>
-        <textarea id="text-input" placeholder="Enter plain text here..."></textarea>
-
-        <div class="controls">
-            <button id="encode-btn">▼ ENCODE to Base64 ▼</button>
-            <button id="decode-btn">▲ DECODE from Base64 ▲</button>
+    <!-- Header & Mode Switcher -->
+    <header class="pt-10 pb-6 px-4 flex flex-col items-center justify-center sticky top-0 z-50 bg-[#F5F5F7]/90 backdrop-blur-md transition-all">
+        <h1 class="text-2xl font-bold tracking-tight mb-6 text-slate-800 hidden md:block">Base64 Converter</h1>
+        
+        <!-- iOS Segmented Control -->
+        <div class="bg-slate-200/80 p-1 rounded-xl inline-flex shadow-inner">
+            <button id="tab-text" class="px-8 py-2 rounded-lg text-sm font-semibold transition-all shadow-sm bg-white text-slate-900" onclick="switchMode('text')">
+                Text Converter
+            </button>
+            <button id="tab-image" class="px-8 py-2 rounded-lg text-sm font-semibold transition-all text-slate-500 hover:text-slate-700" onclick="switchMode('image')">
+                Image Converter
+            </button>
         </div>
+    </header>
 
-        <label for="base64-output">Base64 String:</label>
-        <textarea id="base64-output" placeholder="Enter Base64 string here..."></textarea>
-
-        <div class="extra-controls">
-            <button id="copy-text-btn">Copy Text</button>
-            <button id="copy-base64-btn">Copy Base64</button>
-            <button id="clear-btn">Clear</button>
-        </div>
-
-        <div class="content">
-            <h2>How to Use This Tool</h2>
-            <p>To Encode: Type or paste your plain text into the top box and click the "ENCODE" button. The Base64 result will appear in the bottom box.</p>
-            <p>To Decode: Paste your Base64 string into the bottom box and click the "DECODE" button. The original plain text will appear in the top box.</p>
-
-            <h2>What is Base64 Encoding?</h2>
-            <p>Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format by translating it into a radix-64 representation. The term Base64 originates from a specific MIME content transfer encoding. It's designed to carry data stored in binary formats across channels that only reliably support text content.</p>
-            <p>It is called "Base64" because it uses a set of 64 characters to represent the data. These characters are A-Z, a-z, 0-9, and the symbols '+' and '/'. Sometimes the '=' character is used for padding at the end of the encoded data.</p>
-
-            <h2>Why is Base64 Used?</h2>
-            <h3>Embedding Data:</h3>
-            <p>The most common use case is embedding binary data, like images, directly into HTML or CSS files using Data URIs. This avoids the need for separate file requests. For example: <code>data:image/png;base64,...</code></p>
-            <h3>Email Attachments:</h3>
-            <p>Base64 is used to encode binary file attachments for email. The SMTP protocol, which handles email transport, is primarily text-based, so attachments must be encoded into a text format to ensure they are transmitted without corruption.</p>
-            <h3>APIs and JSON:</h3>
-            <p>When you need to transmit binary data (like a file or an image) within a text-based format like JSON or XML, you must first encode it into a string. Base64 is the standard for this purpose, ensuring the data remains intact during transmission.</p>
-
-            <h2>Base64 FAQ</h2>
-            <h3>Is Base64 an encryption?</h3>
-            <p>No, Base64 is not encryption. It is an encoding. It provides no security or privacy, as anyone can decode it if they know it's Base64 encoded. It is only used for the safe transport of data, not for protecting it.</p>
-            <h3>Is this tool secure?</h3>
-            <p>Yes. All encoding and decoding happens 100% locally in your browser using JavaScript. No data is ever sent to our server, ensuring your information remains private.</p>
+    <!-- Top Ad Banner -->
+    <div class="container mx-auto px-4 max-w-6xl mb-6">
+        <div class="w-full h-24 bg-slate-200 rounded-xl flex items-center justify-center border border-slate-300 border-dashed text-slate-400 text-sm">
+            Top Banner Ad Space
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 max-w-6xl flex flex-col lg:flex-row gap-6 mb-12">
+        
+        <!-- Converter Card -->
+        <div class="flex-1 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px] flex flex-col">
+            
+            <!-- Text Mode -->
+            <div id="text-mode-container" class="flex flex-col h-full fade-in">
+                <!-- Toolbar -->
+                <div class="flex flex-wrap items-center justify-between mb-4 gap-4">
+                    <div class="flex items-center gap-2">
+                        <label class="relative inline-flex items-center cursor-pointer group">
+                            <input type="checkbox" id="url-safe-toggle" class="sr-only peer">
+                            <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-500"></div>
+                            <span class="ml-2 text-sm font-medium text-slate-600 group-hover:text-slate-800 transition-colors">URL Safe (+ → -, / → _)</span>
+                        </label>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="clearText()" class="text-slate-400 hover:text-red-500 text-sm font-medium transition-colors px-3 py-1 rounded-md hover:bg-slate-50">Clear All</button>
+                    </div>
+                </div>
+
+                <!-- Split View -->
+                <div class="flex-1 flex flex-col md:flex-row gap-4 md:gap-8 relative">
+                    <!-- Input -->
+                    <div class="flex-1 flex flex-col">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Plain Text (UTF-8)</label>
+                            <span id="input-count" class="text-xs text-slate-400">0 chars</span>
+                        </div>
+                        <div class="relative flex-1 group">
+                            <textarea id="text-input" class="w-full h-full min-h-[250px] bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none shadow-inner transition-shadow code-scroll text-slate-700 placeholder-slate-400" placeholder="Type or paste content here to encode..."></textarea>
+                            <button onclick="copyToClipboard('text-input')" class="absolute top-2 right-2 bg-white/80 backdrop-blur hover:bg-white text-slate-500 p-1.5 rounded-lg shadow-sm border border-slate-200 opacity-0 group-hover:opacity-100 transition-opacity" title="Copy Text">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Middle Action (Visual only, since it's real-time) -->
+                    <div class="hidden md:flex flex-col justify-center items-center z-10 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                        <div class="bg-white rounded-full p-2 shadow-lg border border-slate-100 text-slate-300">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                        </div>
+                    </div>
+
+                    <!-- Output -->
+                    <div class="flex-1 flex flex-col">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Base64 Output</label>
+                            <span id="output-count" class="text-xs text-slate-400">0 chars</span>
+                        </div>
+                        <div class="relative flex-1 group">
+                            <textarea id="base64-output" class="w-full h-full min-h-[250px] bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none shadow-inner transition-shadow code-scroll text-blue-600 placeholder-blue-300/50" placeholder="Base64 result will appear here..."></textarea>
+                            <button onclick="copyToClipboard('base64-output')" class="absolute top-2 right-2 bg-white/80 backdrop-blur hover:bg-white text-slate-500 p-1.5 rounded-lg shadow-sm border border-slate-200 opacity-0 group-hover:opacity-100 transition-opacity" title="Copy Base64">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Mode -->
+            <div id="image-mode-container" class="hidden h-full flex-col fade-in">
+                <!-- Drop Zone -->
+                <div id="drop-zone" class="w-full flex-1 min-h-[300px] border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50/50 flex flex-col items-center justify-center p-8 transition-all cursor-pointer hover:bg-blue-50 hover:border-blue-400 group relative overflow-hidden">
+                    <input type="file" id="file-input" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" accept="image/*">
+                    
+                    <div id="upload-prompt" class="text-center z-10 transition-all duration-300">
+                        <div class="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform text-blue-500">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-slate-700 mb-1">Drag & Drop Image</h3>
+                        <p class="text-sm text-slate-400">or click to browse</p>
+                    </div>
+
+                    <!-- Preview State (Hidden by default) -->
+                    <div id="preview-container" class="hidden flex-col items-center w-full h-full z-10">
+                        <div class="relative h-48 mb-6 group w-full flex justify-center">
+                            <img id="image-preview" src="" alt="Preview" class="h-full object-contain rounded-lg shadow-md border border-slate-200 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGgyMHYyMEgwem0xMCAxMGgxMHYxMEgxMHoiIGZpbGw9IiNlNTVhNjQiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')]">
+                            <button onclick="resetImage()" class="absolute top-0 right-0 m-2 bg-slate-900/70 text-white rounded-full p-1 hover:bg-slate-900 transition-colors" title="Remove Image">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Actions -->
+                        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Base64 String</label>
+                                    <button onclick="copyToClipboard('image-base64-output')" class="text-xs text-blue-600 hover:text-blue-700 font-medium">Copy</button>
+                                </div>
+                                <textarea id="image-base64-output" readonly class="w-full h-24 bg-slate-50 border border-slate-200 rounded-lg p-3 font-mono text-xs text-slate-600 focus:ring-2 focus:ring-blue-500 outline-none resize-none code-scroll whitespace-nowrap overflow-x-auto"></textarea>
+                            </div>
+                            <div class="space-y-4">
+                                <button onclick="copyImageCode('html')" class="w-full flex items-center justify-between px-4 py-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-blue-400 hover:ring-1 hover:ring-blue-400 transition-all group text-left">
+                                    <div>
+                                        <span class="block text-sm font-semibold text-slate-700">&lt;img src="..." /&gt;</span>
+                                        <span class="block text-xs text-slate-400">Copy HTML Tag</span>
+                                    </div>
+                                    <svg class="w-5 h-5 text-slate-300 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                </button>
+                                <button onclick="copyImageCode('css')" class="w-full flex items-center justify-between px-4 py-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-blue-400 hover:ring-1 hover:ring-blue-400 transition-all group text-left">
+                                    <div>
+                                        <span class="block text-sm font-semibold text-slate-700">background-image: url(...)</span>
+                                        <span class="block text-xs text-slate-400">Copy CSS</span>
+                                    </div>
+                                    <svg class="w-5 h-5 text-slate-300 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Ad (Responsive: Bottom on mobile, Right on Desktop) -->
+        <aside class="w-full lg:w-80 flex-shrink-0 flex flex-col gap-6">
+            <div class="w-full h-64 bg-slate-200 rounded-xl flex items-center justify-center border border-slate-300 border-dashed text-slate-400 text-sm">
+                Sidebar Ad Space
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="font-bold text-slate-800 mb-2">Quick Tips</h3>
+                <ul class="text-sm text-slate-600 space-y-2 list-disc list-inside">
+                    <li>Use <strong>URL Safe</strong> for web URLs.</li>
+                    <li>Base64 increases file size by ~33%.</li>
+                    <li>Great for small icons & placeholders.</li>
+                </ul>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- SEO Content -->
+    <section class="bg-white border-t border-slate-200">
+        <div class="container mx-auto px-4 py-16 max-w-4xl">
+            <article class="prose prose-slate max-w-none prose-headings:font-bold prose-headings:text-slate-800 prose-p:text-slate-600 prose-a:text-blue-600 hover:prose-a:text-blue-700">
+                <h2>What is Base64?</h2>
+                <p>
+                    Base64 is a binary-to-text encoding scheme that translates binary data into a radix-64 representation (ASCII string). 
+                    It is commonly used to transmit data without data loss or modification during transport, especially when the transport medium only supports text (like Email or JSON).
+                </p>
+                <p>
+                    The characters used are <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>+</code>, and <code>/</code>. 
+                    The equals sign <code>=</code> is used for padding.
+                </p>
+
+                <h2>When to use Base64 for images?</h2>
+                <p>
+                    Converting images to Base64 allows you to embed them directly into HTML or CSS files. This technique is known as <strong>Data URI</strong>.
+                </p>
+                <ul>
+                    <li><strong>Pros:</strong> Reduces HTTP requests (great for small icons), prevents "fouc" (flash of unstyled content), and simplifies single-file distribution.</li>
+                    <li><strong>Cons:</strong> Increases file size by approximately 33%, and images cannot be cached separately by the browser.</li>
+                </ul>
+                <p>
+                    <strong>Best Practice:</strong> Use Base64 for small images like logos, icons, or background patterns (under 10KB). For larger photos, stick to standard <code>.jpg</code> or <code>.webp</code> files.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <span id="toast-message" class="font-medium text-sm">Copied to clipboard!</span>
+    </div>
+
+    <script>
+        // DOM Elements
+        const tabs = {
+            text: document.getElementById('tab-text'),
+            image: document.getElementById('tab-image')
+        };
+        const containers = {
+            text: document.getElementById('text-mode-container'),
+            image: document.getElementById('image-mode-container')
+        };
+        const textInput = document.getElementById('text-input');
+        const base64Output = document.getElementById('base64-output');
+        const urlSafeToggle = document.getElementById('url-safe-toggle');
+        const inputCount = document.getElementById('input-count');
+        const outputCount = document.getElementById('output-count');
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const imagePreview = document.getElementById('image-preview');
+        const imageBase64Output = document.getElementById('image-base64-output');
+        const uploadPrompt = document.getElementById('upload-prompt');
+        const previewContainer = document.getElementById('preview-container');
+
+        // State
+        let currentMode = 'text';
+
+        // Initialize
+        function init() {
+            // Text Mode Listeners
+            textInput.addEventListener('input', () => processText('encode'));
+            base64Output.addEventListener('input', () => processText('decode'));
+            urlSafeToggle.addEventListener('change', () => {
+                // Re-process based on which box has content or was last active
+                // Default to re-encoding if text is present
+                if (textInput.value) processText('encode');
+                else if (base64Output.value) processText('decode');
+            });
+
+            // Image Mode Listeners
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, highlight, false);
+            });
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, unhighlight, false);
+            });
+            dropZone.addEventListener('drop', handleDrop, false);
+            fileInput.addEventListener('change', handleFiles, false);
+        }
+
+        // --- Mode Switching ---
+        function switchMode(mode) {
+            currentMode = mode;
+            
+            // Update Tabs
+            if (mode === 'text') {
+                tabs.text.className = "px-8 py-2 rounded-lg text-sm font-semibold transition-all shadow-sm bg-white text-slate-900";
+                tabs.image.className = "px-8 py-2 rounded-lg text-sm font-semibold transition-all text-slate-500 hover:text-slate-700";
+                
+                containers.text.classList.remove('hidden');
+                containers.image.classList.add('hidden');
+            } else {
+                tabs.image.className = "px-8 py-2 rounded-lg text-sm font-semibold transition-all shadow-sm bg-white text-slate-900";
+                tabs.text.className = "px-8 py-2 rounded-lg text-sm font-semibold transition-all text-slate-500 hover:text-slate-700";
+                
+                containers.image.classList.remove('hidden');
+                containers.image.classList.add('flex'); // Image container needs flex
+                containers.text.classList.add('hidden');
+            }
+        }
+
+        // --- Text Logic ---
+        function processText(action) {
+            const isUrlSafe = urlSafeToggle.checked;
+
+            try {
+                if (action === 'encode') {
+                    const input = textInput.value;
+                    inputCount.textContent = `${input.length} chars`;
+                    
+                    if (!input) {
+                        base64Output.value = '';
+                        outputCount.textContent = '0 chars';
+                        return;
+                    }
+
+                    // Encode handling UTF-8
+                    let encoded = btoa(unescape(encodeURIComponent(input)));
+                    
+                    if (isUrlSafe) {
+                        encoded = encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+                    }
+                    
+                    base64Output.value = encoded;
+                    outputCount.textContent = `${encoded.length} chars`;
+                } else {
+                    let input = base64Output.value;
+                    outputCount.textContent = `${input.length} chars`;
+
+                    if (!input) {
+                        textInput.value = '';
+                        inputCount.textContent = '0 chars';
+                        return;
+                    }
+
+                    if (isUrlSafe) {
+                        input = input.replace(/-/g, '+').replace(/_/g, '/');
+                        // Add padding if needed
+                        while (input.length % 4) {
+                            input += '=';
+                        }
+                    }
+
+                    // Decode handling UTF-8
+                    const decoded = decodeURIComponent(escape(atob(input)));
+                    textInput.value = decoded;
+                    inputCount.textContent = `${decoded.length} chars`;
+                }
+            } catch (e) {
+                // If error (e.g. invalid base64), just do nothing or show indicator
+                // console.error(e);
+                if (action === 'decode') {
+                    // textInput.value = "Invalid Base64 string";
+                }
+            }
+        }
+
+        function clearText() {
+            textInput.value = '';
+            base64Output.value = '';
+            inputCount.textContent = '0 chars';
+            outputCount.textContent = '0 chars';
+            textInput.focus();
+        }
+
+        // --- Image Logic ---
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function highlight(e) {
+            dropZone.classList.add('drag-active');
+        }
+
+        function unhighlight(e) {
+            dropZone.classList.remove('drag-active');
+        }
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles({ target: { files: files } });
+        }
+
+        function handleFiles(e) {
+            const files = e.target.files;
+            if (files.length > 0) {
+                const file = files[0];
+                if (!file.type.startsWith('image/')) {
+                    showToast('Please upload an image file', 'error');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    const base64 = reader.result;
+                    imagePreview.src = base64;
+                    imageBase64Output.value = base64;
+                    
+                    // Show preview UI
+                    uploadPrompt.classList.add('hidden');
+                    previewContainer.classList.remove('hidden');
+                    previewContainer.classList.add('flex');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function resetImage() {
+            fileInput.value = '';
+            imagePreview.src = '';
+            imageBase64Output.value = '';
+            uploadPrompt.classList.remove('hidden');
+            previewContainer.classList.add('hidden');
+            previewContainer.classList.remove('flex');
+        }
+
+        function copyImageCode(type) {
+            const base64 = imageBase64Output.value;
+            if (!base64) return;
+
+            let textToCopy = '';
+            if (type === 'html') {
+                textToCopy = `<img src="${base64}" alt="Base64 Image" />`;
+            } else if (type === 'css') {
+                textToCopy = `background-image: url('${base64}');`;
+            }
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast(type === 'html' ? 'HTML tag copied!' : 'CSS rule copied!');
+            });
+        }
+
+        // --- Utilities ---
+        function copyToClipboard(elementId) {
+            const el = document.getElementById(elementId);
+            if (el && el.value) {
+                navigator.clipboard.writeText(el.value).then(() => {
+                    showToast('Copied to clipboard!');
+                });
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toast-message');
+            
+            msgEl.textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Run init
+        init();
+        
+        // Expose switchMode to global scope for onclick
+        window.switchMode = switchMode;
+        window.clearText = clearText;
+        window.copyToClipboard = copyToClipboard;
+        window.resetImage = resetImage;
+        window.copyImageCode = copyImageCode;
+    </script>
 </body>
 </html>
